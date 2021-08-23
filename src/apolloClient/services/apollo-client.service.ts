@@ -1,5 +1,6 @@
 import { ApolloClient, createHttpLink, from, InMemoryCache, MutationOptions, QueryOptions } from '@apollo/client/core';
 import { Inject, Injectable, Scope } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { CONTEXT } from '@nestjs/graphql';
 import fetcher from 'isomorphic-fetch';
 import { v4 } from 'uuid';
@@ -8,10 +9,14 @@ import { ApolloClientConfigType } from '../types';
 
 @Injectable({ scope: Scope.REQUEST })
 export class ApolloClientService {
-  private readonly apolloClient: any;
+  protected readonly apolloClient: any;
   apollo: any;
 
-  constructor(private config: ApolloClientConfigType, @Inject(CONTEXT) private context: any) {
+  constructor(
+    protected config: ApolloClientConfigType,
+    protected configService: ConfigService,
+    @Inject(CONTEXT) protected context: any,
+  ) {
     const contexts = [];
     let headers: any = {};
     if (config.headers) {

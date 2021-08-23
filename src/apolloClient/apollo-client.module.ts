@@ -1,16 +1,14 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
-import {
-  ApolloClientModuleAsyncOptionsInterface,
-  ApolloClientOptionsFactoryInterface,
-} from './interfaces';
+import { ApolloClientModuleAsyncOptionsInterface, ApolloClientOptionsFactoryInterface } from './interfaces';
 import { ApolloClientService } from './services';
 import { ApolloClientConfigType } from './types';
 
 @Module({
   imports: [],
-  providers: [ApolloClientService, ApolloClientConfigType],
-  exports: [ApolloClientService, ApolloClientConfigType],
+  providers: [ApolloClientService, ApolloClientConfigType, ConfigService],
+  exports: [ApolloClientService, ApolloClientConfigType, ConfigService],
 })
 export class ApolloClientModule {
   static register(config: ApolloClientConfigType): DynamicModule {
