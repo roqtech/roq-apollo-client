@@ -3,7 +3,6 @@ import { Inject, Injectable, Scope } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { CONTEXT } from '@nestjs/graphql';
 import fetcher from 'isomorphic-fetch';
-import { v4 } from 'uuid';
 
 import { ApolloClientConfigType } from '../types';
 
@@ -52,8 +51,6 @@ export class ApolloClientService {
       request.context = { headers: {} };
     }
     request.context.headers = { ...request.context.headers, ...headers };
-    request.context.headers['request-id'] = this.context?.req?.headers?.['request-id'] || v4();
-    request.context.headers['request-caller'] = this.config?.['request-caller'];
     if ('query' in request && responseKey) {
       const {
         data: { [responseKey]: response },
